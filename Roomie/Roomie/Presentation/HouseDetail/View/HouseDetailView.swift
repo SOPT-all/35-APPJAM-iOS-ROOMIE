@@ -18,6 +18,7 @@ final class HouseDetailView: BaseView {
     private let contentView = UIView()
     
     // HousePhoto Section
+    let photoBackView = UIView()
     let photoImageView = UIImageView()
     
     // HouseInfo Section
@@ -196,7 +197,7 @@ final class HouseDetailView: BaseView {
         scrollView.addSubviews(contentView)
         
         contentView.addSubviews(
-            photoImageView,
+            photoBackView,
             houseInfoBackView,
             nameBackView,
             titleLabel,
@@ -214,6 +215,8 @@ final class HouseDetailView: BaseView {
             roommateTitleLabel,
             roommateTableView
         )
+        
+        photoBackView.addSubview(photoImageView)
         
         nameBackView.addSubview(nameLabel)
         
@@ -251,19 +254,24 @@ final class HouseDetailView: BaseView {
             $0.height.greaterThanOrEqualToSuperview().priority(.low)
         }
         
-        photoImageView.snp.makeConstraints {
+        photoBackView.snp.makeConstraints {
             $0.top.horizontalEdges.equalToSuperview()
             $0.height.equalTo(Screen.height(316))
         }
         
+        photoImageView.snp.makeConstraints {
+            $0.top.equalTo(self.snp.top).priority(.high)
+            $0.horizontalEdges.bottom.equalToSuperview()
+        }
+        
         houseInfoBackView.snp.makeConstraints {
-            $0.top.equalTo(photoImageView.snp.bottom).offset(-20)
+            $0.top.equalTo(photoBackView.snp.bottom).offset(-20)
             $0.horizontalEdges.equalToSuperview()
             $0.bottom.equalTo(lookInsidePhotoButton.snp.bottom).offset(20)
         }
         
         nameBackView.snp.makeConstraints {
-            $0.top.equalTo(photoImageView.snp.bottom)
+            $0.top.equalTo(photoBackView.snp.bottom)
             $0.leading.equalToSuperview().inset(20)
         }
         
